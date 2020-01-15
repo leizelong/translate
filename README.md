@@ -4,5 +4,5 @@
 
 * Run your command from the command palette by pressing (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and typing `Translate`.
 
-![](./media/action.gif)
+![](https://github.com/leizelong/translate/blob/master/media/action.gif?raw=true)
 
