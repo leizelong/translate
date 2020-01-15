@@ -6,12 +6,17 @@
   "engines": {
     "vscode": "^1.41.0"
   },
+  "publisher": "leizl",
   "categories": [
     "Other"
   ],
   "activationEvents": [
     "onCommand:extension.translate"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leizelong/translate.git"
+  },
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -30,7 +35,6 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/json5": "0.0.30",
     "@types/mocha": "^5.2.7",
     "@types/node": "^13.1.6",
     "@types/vscode": "^1.41.0",
@@ -41,7 +45,6 @@
     "vscode-test": "^1.2.2"
   },
   "dependencies": {
-    "google-translate-api": "git+https://github.com/leizelong/google-translate-api.git#master",
-    "json5": "^2.1.1"
+    "@leizl/google-translate-api": "0.0.1"
   }
 }

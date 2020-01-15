@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-const translate = require("google-translate-api");
+const translate = require("@leizl/google-translate-api");
 const fs = require("fs");
 
 // {
