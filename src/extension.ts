@@ -1,15 +1,26 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import translate, {
+  parseMultiple,
+  getAllCode,
+  Options
+} from "@leizl/google-translate-open-api";
 
-const translate = require("@leizl/google-translate-api");
+async function $translate(values: string[] | string, option: Options) {
+  const res = await translate(values, option);
+
+  let data;
+  if (values.length === 1) {
+    data = [res.data];
+  } else {
+    data = parseMultiple(res.data[0]);
+  }
+  return data;
+}
+
+// const translate = require("@leizl/google-translate-api");
 const fs = require("fs");
-
-// {
-//   "zh-cn": {
-//     "home": "首页"
-//   }
-// }
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -37,52 +48,50 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     "extension.translate",
     async () => {
-      // The code you place here will be executed every time your command is executed
-      const langs = Object.keys(translate.languages);
-      const from =
-        (await vscode.window.showQuickPick(moveFirst(langs, "zh"), {
+      try {
+        // The code you place here will be executed every time your command is executed
+        const langs = getAllCode();
+        const from = await vscode.window.showQuickPick(moveFirst(langs, "zh"), {
           placeHolder: "from: 请输入充当翻译模板的语言国家码(default: zh)"
-        })) || "zh";
-      const to =
-        (await vscode.window.showQuickPick(moveFirst(langs, "en"), {
-          placeHolder: "to: 请输入需要被翻译的语言国家码(default: en)"
-        })) || "en";
-
-      const langFile = vscode.window.activeTextEditor?.document;
-      const fileName = langFile?.fileName;
-      const text = fs.readFileSync(fileName, "utf-8", (e: Error) => {
-        console.warn(e);
-      });
-      // const from = "zh-cn";
-      // const to = "vi";
-      const preLangs = text ? JSON.parse(text) : {};
-      const curLang = preLangs[from]; // { home: '首页',}
-
-      async function translateData(data: any, from: string, to: string) {
-        if (!data) {
-          return { [to]: {} };
-        }
-        let res: any = {};
-        for (const [key, value] of Object.entries(data)) {
-          const { text: translateValue } =
-            (await translate(value, { from, to })) || {};
-          res[key] = translateValue;
-        }
-        return { [to]: res };
-      }
-
-      translateData(curLang, from, to)
-        .then(res => {
-          const finalLangs = { ...preLangs, ...res };
-          fs.writeFileSync(
-            fileName,
-            JSON.stringify(finalLangs, null, 2),
-            console.warn
-          );
-        })
-        .catch(e => {
-          console.warn("error", e);
         });
+        const to = await vscode.window.showQuickPick(moveFirst(langs, "en"), {
+          placeHolder: "to: 请输入需要被翻译的语言国家码(default: en)"
+        });
+        if (!(from && to)) {
+          return;
+        }
+
+        const langFile = vscode.window.activeTextEditor?.document;
+        const fileName = langFile?.fileName;
+        const text = fs.readFileSync(fileName, "utf-8", (e: Error) => {
+          console.warn(e);
+        });
+        const preLangs = text ? JSON.parse(text) : {};
+        const originData = preLangs[from]; // { home: '首页',}
+        if (!originData) {
+          vscode.window.showErrorMessage(
+            `not found template key: ${from}, please check current file`
+          );
+          return;
+        }
+
+        const keys: string[] = Object.keys(originData);
+        const values: string[] = Object.values(originData);
+        const result = await $translate(values, { from, to });
+        const toData = keys.reduce((total, key, idx) => {
+          const value = result[idx];
+          return Object.assign(total, { [key]: value });
+        }, {});
+        const finalLangs = { ...preLangs, [to]: toData };
+        fs.writeFileSync(
+          fileName,
+          JSON.stringify(finalLangs, null, 2),
+          (e: Error) => console.warn(e)
+        );
+        vscode.window.showInformationMessage(`translate complete!`);
+      } catch (error) {
+        vscode.window.showErrorMessage(error.message);
+      }
     }
   );
 

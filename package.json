@@ -45,6 +45,6 @@
     "vscode-test": "^1.2.2"
   },
   "dependencies": {
-    "@leizl/google-translate-api": "0.0.1"
+    "@leizl/google-translate-open-api": "0.0.1"
   }
 }
