@@ -6,6 +6,7 @@ import translate, {
   getAllCode,
   Options
 } from "@leizl/google-translate-open-api";
+const json5 = require("json5");
 
 async function $translate(values: string[] | string, option: Options) {
   const res = await translate(values, option);
@@ -63,10 +64,24 @@ export function activate(context: vscode.ExtensionContext) {
 
         const langFile = vscode.window.activeTextEditor?.document;
         const fileName = langFile?.fileName;
-        const text = fs.readFileSync(fileName, "utf-8", (e: Error) => {
-          console.warn(e);
-        });
-        const preLangs = text ? JSON.parse(text) : {};
+        if (!fileName) {
+          return;
+        }
+        let langText = fs.readFileSync(fileName, "utf-8");
+        // function templateFile(template: string, ...data: string[]) {
+        //   const res = template.replace(/./, json)
+        // }
+        let template = (data: any) => JSON.stringify(data, null, 2);
+
+        const cmsHeaderReg = /^export default ({[^;]*});?/;
+
+        if (/\.(js|ts)$/.test(fileName)) {
+          langText = langText.replace(cmsHeaderReg, "$1");
+          template = (data: any) =>
+            `export default ${json5.stringify(data, null, 2)};`;
+        }
+
+        const preLangs = langText ? json5.parse(langText) : {};
         const originData = preLangs[from]; // { home: '首页',}
         if (!originData) {
           vscode.window.showErrorMessage(
@@ -82,11 +97,11 @@ export function activate(context: vscode.ExtensionContext) {
           const value = result[idx];
           return Object.assign(total, { [key]: value });
         }, {});
-        const finalLangs = { ...preLangs, [to]: toData };
-        fs.writeFileSync(
-          fileName,
-          JSON.stringify(finalLangs, null, 2),
-          (e: Error) => console.warn(e)
+
+        const finalLangContent = template({ ...preLangs, [to]: toData });
+
+        fs.writeFileSync(fileName, finalLangContent, (e: Error) =>
+          console.warn(e)
         );
         vscode.window.showInformationMessage(`translate complete!`);
       } catch (error) {

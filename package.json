@@ -2,7 +2,7 @@
   "name": "translate",
   "displayName": "translate",
   "description": "多语言一键翻译",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.41.0"
   },
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
+    "@types/json5": "0.0.30",
     "@types/mocha": "^5.2.7",
     "@types/node": "^13.1.6",
     "@types/vscode": "^1.41.0",
@@ -45,6 +46,7 @@
     "vscode-test": "^1.2.2"
   },
   "dependencies": {
-    "@leizl/google-translate-open-api": "0.0.1"
+    "@leizl/google-translate-open-api": "0.0.1",
+    "json5": "^2.1.1"
   }
 }
