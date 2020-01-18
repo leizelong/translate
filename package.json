@@ -2,7 +2,7 @@
   "name": "i18n-translate",
   "displayName": "i18n-translate",
   "description": "多语言一键翻译",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.41.0"
   },
