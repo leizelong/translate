@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   let disposable = vscode.commands.registerCommand(
-    "extension.translate",
+    "extension.i18n-translate",
     async () => {
       try {
         // The code you place here will be executed every time your command is executed
