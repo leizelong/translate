@@ -36,12 +36,14 @@
 
 const fs = require("fs");
 const json5 = require("json5");
-const path = "./test-i18n.js";
+const path = "./test_i18n/i18n.js";
 const fileStream = fs.readFileSync(path, { encoding: "utf-8" });
-const headerReg = /^export default ({[^;]*});?/;
+const headerReg = /([^;]*?)(?={)({[^;]*})(;?)/;
+// /({[^;]*});?/?
 // console.warn(fileStream, headerReg.compile(fileStream) );
 const objStr = fileStream.replace(headerReg, "$1");
-const obj = json5.parse(objStr);
-const template = `export default ${JSON.stringify(obj, null, 2)};`;
+console.warn(fileStream.match(headerReg));
+// const obj = json5.parse(objStr);
+// const template = `export default ${JSON.stringify(obj, null, 2)};`;
 
-console.warn(/^;/.test(";"), template);
+// console.warn(/^;/.test(";"), template);

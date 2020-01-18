@@ -7,6 +7,7 @@ import translate, {
   Options
 } from "@leizl/google-translate-open-api";
 const json5 = require("json5");
+const fs = require("fs");
 
 async function $translate(values: string[] | string, option: Options) {
   const res = await translate(values, option);
@@ -19,9 +20,6 @@ async function $translate(values: string[] | string, option: Options) {
   }
   return data;
 }
-
-// const translate = require("@leizl/google-translate-api");
-const fs = require("fs");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -67,21 +65,16 @@ export function activate(context: vscode.ExtensionContext) {
         if (!fileName) {
           return;
         }
-        let langText = fs.readFileSync(fileName, "utf-8");
-        // function templateFile(template: string, ...data: string[]) {
-        //   const res = template.replace(/./, json)
-        // }
-        let template = (data: any) => JSON.stringify(data, null, 2);
+        const langText = fs.readFileSync(fileName, "utf-8");
 
-        const cmsHeaderReg = /^export default ({[^;]*});?/;
-
-        if (/\.(js|ts)$/.test(fileName)) {
-          langText = langText.replace(cmsHeaderReg, "$1");
-          template = (data: any) =>
-            `export default ${json5.stringify(data, null, 2)};`;
+        const cmsHeaderReg = /([^;]*?)(?={)({[^;]*})(;?)/;
+        const [, header, content, footer] = langText.match(cmsHeaderReg);
+        function stand(data: string) {
+          return `${header}${data}${footer}`;
         }
+        const template = (data: any) => stand(JSON.stringify(data, null, 2));
 
-        const preLangs = langText ? json5.parse(langText) : {};
+        const preLangs = content ? json5.parse(content) : {};
         const originData = preLangs[from]; // { home: '首页',}
         if (!originData) {
           vscode.window.showErrorMessage(
