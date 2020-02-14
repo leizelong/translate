@@ -1,17 +1,18 @@
 {
-  "name": "i18n-translate",
-  "displayName": "i18n-translate",
+  "name": "translate",
+  "displayName": "translate",
   "description": "多语言一键翻译",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
     "vscode": "^1.41.0"
   },
-  "publisher": "leizl",
+  "publisher": "leizl@1196324866@qq.com",
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.i18n-translate"
+    "onCommand:extension.translate",
+    "onCommand:extension.translate-auto"
   ],
   "repository": {
     "type": "git",
@@ -21,9 +22,14 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.i18n-translate",
+        "command": "extension.translate-i18n",
         "title": "多语言翻译",
-        "category": "i18n-translate"
+        "category": "translate-i18n"
+      },
+      {
+        "command": "extension.translate-auto",
+        "title": "开启多语言自动翻译",
+        "category": "translate-auto"
       }
     ]
   },
@@ -36,9 +42,10 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/json5": "0.0.30",
+    "@types/json5": "^0.0.30",
+    "@types/lodash": "^4.14.149",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.6",
+    "@types/node": "^13.7.1",
     "@types/vscode": "^1.41.0",
     "glob": "^7.1.5",
     "mocha": "^6.2.2",
@@ -48,6 +55,8 @@
   },
   "dependencies": {
     "@leizl/google-translate-open-api": "0.0.1",
-    "json5": "^2.1.1"
+    "json5": "^2.1.1",
+    "lodash": "^4.17.15",
+    "md5": "^2.2.1"
   }
 }
