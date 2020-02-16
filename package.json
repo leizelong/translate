@@ -1,17 +1,17 @@
 {
   "name": "translate",
   "displayName": "translate",
-  "description": "多语言一键翻译",
-  "version": "0.0.8",
+  "description": "多语言翻译",
+  "version": "0.0.9",
   "engines": {
     "vscode": "^1.41.0"
   },
-  "publisher": "leizl@1196324866@qq.com",
+  "publisher": "leizl",
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.translate",
+    "onCommand:extension.translate-i18n",
     "onCommand:extension.translate-auto"
   ],
   "repository": {
@@ -23,12 +23,12 @@
     "commands": [
       {
         "command": "extension.translate-i18n",
-        "title": "多语言翻译",
+        "title": "翻译多语言",
         "category": "translate-i18n"
       },
       {
         "command": "extension.translate-auto",
-        "title": "开启多语言自动翻译",
+        "title": "自动翻译多语言",
         "category": "translate-auto"
       }
     ]

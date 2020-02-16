@@ -17,7 +17,6 @@ export async function translateAndSave(
   function stand(data: string) {
     return `${header}${data}${footer}`;
   }
- 
   const template = (data: any) => stand(JSON.stringify(data, null, 2));
 
   const preLangs = content ? json5.parse(content) : {};

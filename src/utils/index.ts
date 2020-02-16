@@ -4,7 +4,7 @@ import translate, {
 } from "@leizl/google-translate-open-api";
 
 async function $translate(values: string[] | string, option: Options) {
-  const res = await translate(values, option);
+  const res = await translate(values, { ...option, tld: "cn" });
 
   let data;
   if (values.length === 1) {
