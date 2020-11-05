@@ -2,6 +2,7 @@ out
 node_modules
 .vscode-test/
 *.vsix
-# .vscode
+.vscode
 yaln.lock
 package-lock.json
+dist
