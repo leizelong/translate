@@ -57,7 +57,7 @@
   "dependencies": {
     "@leizl/google-translate-open-api": "0.0.1",
     "json5": "^2.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "md5": "^2.2.1"
   }
 }
