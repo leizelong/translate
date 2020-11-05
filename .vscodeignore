@@ -12,3 +12,7 @@ media/**
 test_i18n/**
 
 node_modules
+out/
+src/
+tsconfig.json
+webpack.config.js

@@ -5,3 +5,4 @@ node_modules
 .vscode
 yaln.lock
 package-lock.json
+dist
