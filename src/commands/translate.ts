@@ -32,6 +32,9 @@ export async function translateAndSave(
   const values: string[] = Object.values(originData);
   const result = await $translate(values, { from, to });
   const toData = keys.reduce((total, key, idx) => {
+    if(originData[key]) {
+      return total;
+    }
     const value = result[idx];
     return Object.assign(total, { [key]: value });
   }, {});
