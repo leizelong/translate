@@ -11,5 +11,4 @@ vsc-extension-quickstart.md
 media/**
 test_i18n/**
 
-node_modules
 webpack.config.js
