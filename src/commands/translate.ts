@@ -37,7 +37,6 @@ export async function translateAndSave(
   }, {});
 
   const finalLangContent = template({ ...preLangs, [to]: toData });
-
   fs.writeFileSync(fileName, finalLangContent, (err: Error) => {
     if (err) {
       vscode.window.showErrorMessage(err.message);
@@ -68,9 +67,7 @@ const cmdTranslate = vscode.commands.registerCommand(
       if (!fileName) {
         return;
       }
-      translateAndSave(fileName, { from, to }).catch(err => {
-        console.warn("err", err);
-      });
+     await translateAndSave(fileName, { from, to })
       //   const langText = fs.readFileSync(fileName, "utf-8");
 
       //   const cmsHeaderReg = /([^;]*?)(?={)({[^;]*})(;?)/;
