@@ -2,7 +2,7 @@
   "name": "translate",
   "displayName": "translate",
   "description": "多语言翻译",
-  "version": "0.0.16-alpha.0",
+  "version": "0.0.16",
   "license": "MIT",
   "engines": {
     "vscode": "^1.41.0"
@@ -37,8 +37,6 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile",
     "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "webpack --mode production",
@@ -46,7 +44,8 @@
     "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
     "prepare": "husky install",
-    "version:alpha": "standard-version --prerelease alpha"
+    "version:alpha": "standard-version --prerelease alpha",
+    "release": "standard-version"
   },
   "config": {
     "commitizen": {
