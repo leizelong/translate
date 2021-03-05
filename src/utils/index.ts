@@ -1,10 +1,11 @@
-import translate, {
-  parseMultiple,
-  Options
-} from "@leizl/google-translate-open-api";
+import translate, { parseMultiple } from "@leizl/google-translate-open-api";
 
-async function $translate(values: string[] | string, option: Options) {
-  const res = await translate(values, { ...option, tld: "cn" });
+async function $translate(values: string[], option: any) {
+  const res = await translate(values, {
+    ...option,
+    tld: "cn",
+    client: "dict-chrome-ex",
+  });
 
   let data;
   if (values.length === 1) {

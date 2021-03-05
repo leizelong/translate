@@ -7,3 +7,5 @@ yaln.lock
 package-lock.json
 dist
 yarn.lock
+.yalc
+yalc.lock

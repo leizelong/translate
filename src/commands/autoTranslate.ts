@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { $translate } from "../utils";
 import { translateAndSave } from "./translate";
 
 const debounce = require("lodash/debounce");

@@ -1,15 +1,13 @@
 import * as vscode from "vscode";
 import { getAllCode } from "@leizl/google-translate-open-api";
 import { $translate, moveFirst } from "../utils";
-// import fs from "fs";
-// import json5 from "json5";
+import * as fs from "fs";
 
-const fs = require("fs");
-const json5 = require("json5");
+const json5 = require("json5").default;
 
 export async function translateAndSave(
   fileName: string,
-  options = { from: "zh", to: "en" }
+  options = { from: "zh", to: "en" },
 ) {
   const { from, to } = options;
   const langText = fs.readFileSync(fileName, "utf-8");
@@ -25,14 +23,19 @@ export async function translateAndSave(
   const originData = preLangs[from]; // { home: '首页',}
   if (!originData) {
     vscode.window.showErrorMessage(
-      `not found template key: ${from}, please check current file`
+      `not found template key: ${from}, please check current file`,
     );
     return;
   }
 
   const keys: string[] = Object.keys(originData);
   const values: string[] = Object.values(originData);
-  const result = await $translate(values, { from, to });
+  let result: any;
+  try {
+    result = await $translate(values, { from, to });
+  } catch (error) {
+    throw error
+  }
   const toData = keys.reduce((total, key, idx) => {
     // if(originData[key]) {
     //   return total;
@@ -79,7 +82,7 @@ const cmdTranslate = vscode.commands.registerCommand(
     } catch (error) {
       vscode.window.showErrorMessage(error.message);
     }
-  }
+  },
 );
 
 export default cmdTranslate;
