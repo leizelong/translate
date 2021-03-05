@@ -12,3 +12,5 @@ media/**
 test_i18n/**
 
 webpack.config.js
+
+.husky/**
