@@ -2,7 +2,7 @@
   "name": "translate",
   "displayName": "translate",
   "description": "多语言翻译",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "license": "MIT",
   "engines": {
     "vscode": "^1.41.0"
@@ -39,7 +39,7 @@
     "postinstall": "husky install",
     "pretest": "yarn run compile",
     "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "webpack --mode production && yarn release",
+    "vscode:prepublish": "yarn release && webpack --mode production",
     "webpack": "webpack --mode development",
     "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
