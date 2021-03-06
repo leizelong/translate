@@ -4,9 +4,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.16](https://github.com/leizelong/translate/compare/v0.0.16-alpha.0...v0.0.16) (2021-03-05)
 
-### 0.0.16-alpha.0 (2021-03-05)
-
-
 ### Features
 
 * 添加logo ([f4c7473](https://github.com/leizelong/translate/commit/f4c747387662592e6d32287269655161fffcae36))
