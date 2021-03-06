@@ -7,11 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* **wip:** wIP: 增加commit检查 ([98583eb](https://github.com/leizelong/translate/commit/98583ebfcbb1bdaa21f9e5b91dd504e1e5aac2a2))
-* **批量翻译:** 使用批量翻译 ([a3e08d2](https://github.com/leizelong/translate/commit/a3e08d236e07a0c6bb1209385d9a3807202e74af))
 * 更新使用教程gif,更快更简洁 ([4dac661](https://github.com/leizelong/translate/commit/4dac661ff9702876b6102336633fcd127ee9b291))
-* 添加logo ([f4c7473](https://github.com/leizelong/translate/commit/f4c747387662592e6d32287269655161fffcae36))
-
 
 ### Bug Fixes
 
