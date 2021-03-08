@@ -2,7 +2,7 @@
   "name": "translate",
   "displayName": "translate",
   "description": "多语言翻译",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "license": "MIT",
   "engines": {
     "vscode": "^1.41.0"
