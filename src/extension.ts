@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 
 import translateCmd from "./commands/translate";
 import autoTranslateCmd from "./commands/autoTranslate";
+import "./sentry";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed

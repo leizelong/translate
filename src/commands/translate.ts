@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { getAllCode } from "@leizl/google-translate-open-api";
 import { $translate, moveFirst } from "../utils";
 import * as fs from "fs";
+import * as Sentry from "@sentry/node";
 
 const json5 = require("json5").default;
 
@@ -34,7 +35,7 @@ export async function translateAndSave(
   try {
     result = await $translate(values, { from, to });
   } catch (error) {
-    throw error
+    throw error;
   }
   const toData = keys.reduce((total, key, idx) => {
     // if(originData[key]) {
@@ -49,7 +50,6 @@ export async function translateAndSave(
     await fs.promises.writeFile(fileName, finalLangContent);
   } catch (err) {
     if (err) {
-      console.warn("=======", err.message);
       vscode.window.showErrorMessage(err.message);
       throw err;
     }
@@ -80,6 +80,7 @@ const cmdTranslate = vscode.commands.registerCommand(
       }
       await translateAndSave(fileName, { from, to });
     } catch (error) {
+      Sentry.captureException(error);
       vscode.window.showErrorMessage(error.message);
     }
   },

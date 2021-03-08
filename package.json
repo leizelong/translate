@@ -27,22 +27,14 @@
         "command": "extension.translate-i18n",
         "title": "翻译多语言",
         "category": "translate-i18n"
-      },
-      {
-        "command": "extension.translate-auto",
-        "title": "自动翻译多语言",
-        "category": "translate-auto"
       }
     ]
   },
   "scripts": {
     "postinstall": "husky install",
-    "pretest": "yarn run compile",
-    "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "webpack --mode production",
-    "webpack": "webpack --mode development",
-    "webpack-dev": "webpack --mode development --watch",
-    "test-compile": "tsc -p ./",
+    "start": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
     "prepare": "husky install",
     "version:alpha": "standard-version --prerelease alpha",
     "release": "standard-version"
@@ -86,6 +78,8 @@
   },
   "dependencies": {
     "@leizl/google-translate-open-api": "^0.0.2",
+    "@sentry/node": "^6.2.1",
+    "@sentry/tracing": "^6.2.1",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1"

@@ -9,3 +9,4 @@ dist
 yarn.lock
 .yalc
 yalc.lock
+.DS_Store

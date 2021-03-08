@@ -17,3 +17,4 @@ webpack.config.js
 node_modules/**
 .yalc/**
 yalc.lock
+.DS_Store

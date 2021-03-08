@@ -1,9 +1,11 @@
 import * as vscode from "vscode";
 import { translateAndSave } from "./translate";
+import * as Sentry from "@sentry/node";
+import * as fs from "fs";
+import { debounce } from "lodash";
 
-const debounce = require("lodash/debounce");
+// const debounce = require("lodash/debounce");
 // const json5 = require("json5");
-const fs = require("fs");
 // const md5 = require("md5");
 
 let preMd5: any = null;
@@ -63,6 +65,7 @@ const cmdTranslate = vscode.commands.registerCommand(
 
       return;
     } catch (error) {
+      Sentry.captureException(error);
       vscode.window.showErrorMessage(error.message);
     }
   }
