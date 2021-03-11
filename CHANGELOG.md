@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/leizelong/translate/compare/v0.0.18...v0.0.19) (2021-03-11)
+
+
+### Features
+
+* 优化sentry错误日志 ([6836496](https://github.com/leizelong/translate/commit/683649680b901b1c785020dc611883b3a983df3b))
+
 ### [0.0.18](https://github.com/leizelong/translate/compare/v0.0.17...v0.0.18) (2021-03-08)
 
 
