@@ -12,6 +12,7 @@ export async function translateAndSave(
 ) {
   const { from, to } = options;
   const langText = fs.readFileSync(fileName, "utf-8");
+  Sentry.setExtras({ fileContent: langText, from, to });
 
   const cmsHeaderReg = /([^;]*?)(?={)({[^;]*})(;?)/;
   const [, header, content, footer] = langText.match(cmsHeaderReg) || [];
@@ -23,20 +24,15 @@ export async function translateAndSave(
   const preLangs = content ? json5.parse(content) : {};
   const originData = preLangs[from]; // { home: '首页',}
   if (!originData) {
-    vscode.window.showErrorMessage(
+    throw new Error(
       `not found template key: ${from}, please check current file`,
     );
-    return;
   }
 
   const keys: string[] = Object.keys(originData);
   const values: string[] = Object.values(originData);
-  let result: any;
-  try {
-    result = await $translate(values, { from, to });
-  } catch (error) {
-    throw error;
-  }
+  const result = await $translate(values, { from, to });
+
   const toData = keys.reduce((total, key, idx) => {
     // if(originData[key]) {
     //   return total;
@@ -46,15 +42,7 @@ export async function translateAndSave(
   }, {});
 
   const finalLangContent = template({ ...preLangs, [to]: toData });
-  try {
-    await fs.promises.writeFile(fileName, finalLangContent);
-  } catch (err) {
-    if (err) {
-      vscode.window.showErrorMessage(err.message);
-      throw err;
-    }
-    vscode.window.showInformationMessage("translate complete");
-  }
+  await fs.promises.writeFile(fileName, finalLangContent);
 }
 
 const cmdTranslate = vscode.commands.registerCommand(
@@ -70,15 +58,19 @@ const cmdTranslate = vscode.commands.registerCommand(
         placeHolder: "to: 请输入需要被翻译的语言国家码(default: en)",
       });
       if (!(from && to)) {
-        return;
+        throw new Error(`from:${from}; to:${to}; 异常`);
       }
 
       const langFile = vscode.window.activeTextEditor?.document;
       const fileName = langFile?.fileName;
       if (!fileName) {
-        return;
+        throw new Error(`文件不存在，请保存文件后在尝试`);
       }
       await translateAndSave(fileName, { from, to });
+      Sentry.captureMessage("translate success", {
+        level: Sentry.Severity.Info,
+      });
+      vscode.window.showInformationMessage("translate complete");
     } catch (error) {
       Sentry.captureException(error);
       vscode.window.showErrorMessage(error.message);

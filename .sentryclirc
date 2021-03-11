@@ -1,0 +1,7 @@
+[defaults]
+url = https://sentry.io/
+org = leizl
+project = vscode-translate
+
+[auth]
+token = 5a8832afed284ea6b9f630c1d192e9ff2788e41395014f2086764a62ab94e833
