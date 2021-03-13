@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/leizelong/translate/compare/v0.0.19...v0.0.20) (2021-03-13)
+
+
+### Bug Fixes
+
+* 修复当文件内容仅有一条字段的情况下,翻译内容错误的case ([3faa980](https://github.com/leizelong/translate/commit/3faa9807485201b6642325195ad43b0185cdb8ea))
+
 ### [0.0.19](https://github.com/leizelong/translate/compare/v0.0.18...v0.0.19) (2021-03-11)
 
 
