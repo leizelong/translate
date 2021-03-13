@@ -1,4 +1,22 @@
 import translate, { parseMultiple } from "@leizl/google-translate-open-api";
+import { get } from "lodash";
+
+function parseOne(data: any) {
+  const sentences = get(data, "sentences", []);
+  const item = sentences[0];
+  if (!item) return [];
+  const { trans } = item;
+  return [trans];
+}
+
+function parseTranslateResponse(res: any) {
+  if (Array.isArray(res.data)) {
+    return parseMultiple(res.data[0]);
+  } else if (res.data.sentences) {
+    return parseOne(res.data);
+  }
+  return []
+}
 
 async function $translate(values: string[], option: any) {
   const res = await translate(values, {
@@ -7,12 +25,7 @@ async function $translate(values: string[], option: any) {
     client: "dict-chrome-ex",
   });
 
-  let data;
-  if (values.length === 1) {
-    data = [res.data];
-  } else {
-    data = parseMultiple(res.data[0]);
-  }
+  const data = parseTranslateResponse(res);
   return data;
 }
 

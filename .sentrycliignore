@@ -18,4 +18,5 @@ node_modules/**
 .yalc/**
 yalc.lock
 .DS_Store
+
 .cz-config.js
