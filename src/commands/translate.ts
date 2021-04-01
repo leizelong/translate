@@ -12,7 +12,7 @@ export async function translateAndSave(
 ) {
   const { from, to } = options;
   const langText = fs.readFileSync(fileName, "utf-8");
-  Sentry.setExtras({ fileContent: langText, from, to });
+  Sentry.setExtras({ from, to, fileContent: langText });
 
   const cmsHeaderReg = /([^;]*?)(?={)({[^;]*})(;?)/;
   const [, header, content, footer] = langText.match(cmsHeaderReg) || [];
@@ -42,6 +42,7 @@ export async function translateAndSave(
   }, {});
 
   const finalLangContent = template({ ...preLangs, [to]: toData });
+  Sentry.setExtras({ translatedContent: finalLangContent });
   await fs.promises.writeFile(fileName, finalLangContent);
 }
 
@@ -58,7 +59,7 @@ const cmdTranslate = vscode.commands.registerCommand(
         placeHolder: "to: 请输入需要被翻译的语言国家码(default: en)",
       });
       if (!(from && to)) {
-        throw new Error(`from:${from}; to:${to}; 异常`);
+        return;
       }
 
       const langFile = vscode.window.activeTextEditor?.document;
