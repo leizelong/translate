@@ -1,21 +1,22 @@
-import translate, { parseMultiple } from "@leizl/google-translate-open-api";
-import { get } from "lodash";
+import translate from "@leizl/google-translate-open-api";
+// import { get } from "lodash";
 
-function parseOne(data: any) {
-  const sentences = get(data, "sentences", []);
-  const item = sentences[0];
-  if (!item) return [];
-  const { trans } = item;
-  return [trans];
-}
+// function parseOne(data: any) {
+//   const sentences = get(data, "sentences", []);
+//   const item = sentences[0];
+//   if (!item) return [];
+//   const { trans } = item;
+//   return [trans];
+// }
 
 function parseTranslateResponse(res: any) {
-  if (Array.isArray(res.data)) {
-    return parseMultiple(res.data[0]);
-  } else if (res.data.sentences) {
-    return parseOne(res.data);
-  }
-  return []
+  return res.data;
+  // if (Array.isArray(res.data)) {
+  //   return parseMultiple(res.data[0]);
+  // } else if (res.data.sentences) {
+  //   return parseOne(res.data);
+  // }
+  // return []
 }
 
 async function $translate(values: string[], option: any) {
